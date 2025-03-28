@@ -15,7 +15,7 @@
 
 ## About SDrive
 
-SDrive is a powerful decentralized storage solution that gives you access to large decentralized storage networks without compromising user experience or privacy. It supports multiple networks such as Arweave and IPFS, providing you with a simple API to handle files.
+SDrive is a powerful decentralized storage solution that makes file uploading easy without compromising user experience or privacy. 
 
 ### Key Features
 
@@ -60,7 +60,7 @@ const { SDrive } = require("sdrive");
 ### Basic Usage
 
 ```javascript
-const sdrive = new SDrive("your_sdrive_apikey");
+const sdrive = new SDrive("your_sdrive_apikey", "your_user_guid");
 ```
 
 ### Network Selection (Optional)
@@ -68,7 +68,6 @@ SDrive supports multiple decentralized networks. Default is Arweave.
 
 ```javascript
 const sdrive = new SDrive("your_sdrive_apikey");
-sdrive.network = "arweave"; // or "ipfs"
 ```
 
 ## API Examples
@@ -80,7 +79,7 @@ sdrive.network = "arweave"; // or "ipfs"
 import { SDrive } from "sdrive";
 import fs from "fs/promises";
 
-const sdrive = new SDrive("your_sdrive_apikey");
+const sdrive = new SDrive("your_sdrive_apikey", "your_user_guid");
 const filePath = './my-file.png';
 const buffer = await fs.readFile(filePath);
 
@@ -96,7 +95,7 @@ try {
 ```javascript
 import { SDrive } from "sdrive";
 
-const sdrive = new SDrive("your_sdrive_apikey");
+const sdrive = new SDrive("your_sdrive_apikey", "your_user_guid");
 const filePath = './my-file.png';
 
 try {
@@ -111,7 +110,7 @@ try {
 ```javascript
 import { SDrive } from "sdrive";
 
-const sdrive = new SDrive("your_sdrive_apikey");
+const sdrive = new SDrive("your_sdrive_apikey", "your_user_guid");
 
 // Optional settings
 sdrive.page = 1;  // Page number
