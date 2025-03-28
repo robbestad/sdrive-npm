@@ -1,8 +1,7 @@
-import { SDrive } from "../../dist/esnext/index.js";
-import fs from "fs/promises";
 import "dotenv/config";
+import { SDrive } from "../../dist/esnext/index.js";
 
-const sdrive = new SDrive(process.env.SDRIVE_API_KEY);
+const sdrive = new SDrive(process.env.SDRIVE_API_KEY, process.env.USER_GUID);
 sdrive.network = "ipfs";
 
 const filename = "data.json";

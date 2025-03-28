@@ -1,132 +1,175 @@
 # SDrive 
 
-## The gateway to decentralization
+<div align="center">
+  <img src="https://static.sdrive.app/images/sdrive-logo-transparent.png" width="150" alt="SDrive Logo">
+  <p>
+    <strong>Decentralized, secure storage for modern applications</strong>
+  </p>
+  <p>
+    <a href="#installation">Installation</a> •
+    <a href="#usage">Usage</a> •
+    <a href="#api">API</a> •
+    <a href="#troubleshooting">Troubleshooting</a>
+  </p>
+</div>
 
-<img src="https://static.sdrive.app/images/sdrive-logo-transparent.png" width="150" alt="SDrive Logo">
+## About SDrive
 
-#### SDrive gives you access to large decentralized storage networks without compromising user experience or privacy. You can select from various storage providers such as ARWeave, Shdw Drive, and IPFS, and pay for the services as you use them. There are no hidden charges and no subscription.
+SDrive is a powerful decentralized storage solution that gives you access to large decentralized storage networks without compromising user experience or privacy. It supports multiple networks such as Arweave and IPFS, providing you with a simple API to handle files.
 
-## Requirements
+### Key Features
 
-- Node.js v14 or above
-- An API key from [SDrive](https://sdrive.app/api)
+- 🔒 Secure file upload and storage
+- 🌐 Support for multiple decentralized networks
+- ⚡ Simple and intuitive API
+- 📦 Buffer and file stream support
+- 🔍 Easy file management and overview
+
+## Installation
+
+### Requirements
+- Node.js v18 or newer
+- API key from [SDrive](https://sdrive.pro)
+
+### Package Installation
+```bash
+npm install sdrive
+```
+
+### Configuration
+Create a `.env` file in your project root:
+```env
+SDRIVE_API_KEY=<your-key>
+USER_GUID=<your-guid>
+```
 
 ## Usage
 
-`npm i sdrive`
+### Importing
 
-#### if using modules
-```
-import {SDrive} from "sdrive";
-```
-
-#### if using CommonJS
-substitute the import command below with this
-```
-const {SDrive} = require("sdrive");
+#### ES Modules
+```javascript
+import { SDrive } from "sdrive";
 ```
 
-### Setting network (optional)
-Choose the network you want to upload your data to. Default is Arweave.
-
-```
-import {SDrive} from "sdrive";
-const sdrive = new SDrive("your_sdrive_apikey_here");
-sdrive.network = desired_network // optional
+#### CommonJS
+```javascript
+const { SDrive } = require("sdrive");
 ```
 
-Where `desired_network` is either "arweave" or "ipfs"
+### Basic Usage
 
-### UPLOAD using buffers
+```javascript
+const sdrive = new SDrive("your_sdrive_apikey");
 ```
-import {SDrive} from "sdrive";
+
+### Network Selection (Optional)
+SDrive supports multiple decentralized networks. Default is Arweave.
+
+```javascript
+const sdrive = new SDrive("your_sdrive_apikey");
+sdrive.network = "arweave"; // or "ipfs"
+```
+
+## API Examples
+
+### File Upload
+
+#### Upload using buffer
+```javascript
+import { SDrive } from "sdrive";
 import fs from "fs/promises";
-const sdrive = new SDrive("your_sdrive_apikey_here");
 
-const filePath = './hello.png';
+const sdrive = new SDrive("your_sdrive_apikey");
+const filePath = './my-file.png';
 const buffer = await fs.readFile(filePath);
-await sdrive.upload(buffer, "hello.png")
-  .then(response => {
-    console.log("Upload successful:", response);
-  })
-  .catch(error => {
-    console.error("Upload failed:", error);
-  });
+
+try {
+  const response = await sdrive.upload(buffer, "my-file.png");
+  console.log("Upload successful:", response);
+} catch (error) {
+  console.error("Upload failed:", error);
+}
 ```
 
-### UPLOAD using filestream
-```
-import {SDrive} from "sdrive";
-import fs from "fs/promises";
-const sdrive = new SDrive("your_sdrive_apikey_here");
+#### Upload using file stream
+```javascript
+import { SDrive } from "sdrive";
 
-const filePath = './hello.png';
-await sdrive.upload(filePath, "hello.png")
-  .then(response => {
-    console.log("Upload successful:", response);
-  })
-  .catch(error => {
-    console.error("Upload failed:", error);
-  });
-```
+const sdrive = new SDrive("your_sdrive_apikey");
+const filePath = './my-file.png';
 
-
-### LIST OBJECTS
-```
-import {SDrive} from "sdrive";
-const sdrive = new SDrive("your_sdrive_apikey_here");
-
-sdrive.page = 1; //optional
-sdrive.limit = 10; //optional
-
-await sdrive.listObjects()
-  .then(response => {
-    console.log(response);
-  })
+try {
+  const response = await sdrive.upload(filePath, "my-file.png");
+  console.log("Upload successful:", response);
+} catch (error) {
+  console.error("Upload failed:", error);
+}
 ```
 
-### Getting an API key
+### List Files
+```javascript
+import { SDrive } from "sdrive";
 
-- Go to `https://sdrive.app/`
-- Log in or register an account 
-- Go to `https://sdrive.app/api` and create an API key
+const sdrive = new SDrive("your_sdrive_apikey");
 
-### Pricing
+// Optional settings
+sdrive.page = 1;  // Page number
+sdrive.limit = 10; // Files per page
 
-- Uploads are paid for with a one time fee
-- No bandwidth charge
-- 1 credit ≈ 0.00035 USDC
+try {
+  const response = await sdrive.listObjects();
+  console.log("File overview:", response);
+} catch (error) {
+  console.error("Failed to fetch file overview:", error);
+}
+```
 
-#### Price Chart
+## API Documentation
 
-- 0.001 megabyte: 1 credits (0.00035 USD)
-- 0.005 megabyte: 1 credits (0.00035 USD)
-- 0.01 megabyte: 1 credits (0.00035 USD)
-- 0.05 megabyte: 1 credits (0.00035 USD)
-- 0.1 megabyte: 2 credits (0.00070 USD)
-- 0.5 megabyte: 6 credits (0.00210 USD)
-- 1 megabyte: 11 credits (0.00385 USD)
-- 5 megabyte: 51 credits (0.01785 USD)
-- 20 megabyte: 203 credits (0.07105 USD)
-- 50 megabyte: 513 credits (0.17955 USD)
-- 100 megabyte: 1051 credits (0.36785 USD)
+### Methods
 
-### API Documentation
-`upload(filebuffer, filename)` Uploads a file and returns a promise.
-`listObjects()` Returns a promise that resolves to all files uploaded with your API key.
+#### `upload(filebuffer | filepath, filename)`
+Uploads a file to the selected network.
 
+**Parameters:**
+- `filebuffer | filepath`: Buffer or file path of the file to upload
+- `filename`: Desired filename for the uploaded file
 
-### Contribution
-- Fork the repo
-- Create a new branch
-- Make your changes
-- Create a pull request
+**Returns:** Promise that resolves with upload response
 
-### License
+#### `listObjects()`
+Retrieves a list of all files uploaded with your API key.
 
-This project is licensed under the MIT License. See the LICENSE.md file for details.
+**Returns:** Promise that resolves with file overview
 
-### Contact
+## Troubleshooting
 
-For more information or support, contact us at support@sdrive.app
+### Common Issues
 
+1. **API Key Not Working**
+   - Verify that the API key is correctly copied to the `.env` file
+   - Check if the API key is active in the SDrive dashboard
+
+2. **Upload Failing**
+   - Check if the file size doesn't exceed the limit
+   - Verify that you have sufficient credit on your account
+
+3. **Network Issues**
+   - Check your internet connection
+   - Verify that the selected network is available
+
+## Pricing and Subscription
+
+SDrive requires a monthly subscription for permanent storage of uploaded files.
+
+- Visit [SDrive Dashboard](https://sdrive.pro/account/subscription) to view available plans
+- Choose the plan that best fits your needs
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE.md](LICENSE.md) for details.
+
+## Support
+
+Need help? Visit our [documentation](https://docs.sdrive.pro) or contact us at support@sdrive.pro

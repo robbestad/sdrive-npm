@@ -4,11 +4,11 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 (async () => {
-  const sdrive = new SDrive(process.env.SDRIVE_API_KEY);
-  const filePath = "./hello.png";
+  const sdrive = new SDrive(process.env.SDRIVE_API_KEY, process.env.USER_GUID);
+  const filePath = "./mozart.png";
   const buffer = await fs.readFile(filePath);
   await sdrive
-    .upload(buffer, "hello.png")
+    .upload(buffer, "mozart.png")
     .then((response) => {
       console.log("Upload successful:", response);
     })
